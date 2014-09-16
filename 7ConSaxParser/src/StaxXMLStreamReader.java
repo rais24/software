@@ -13,15 +13,14 @@ import javax.xml.stream.XMLStreamReader;
 public class StaxXMLStreamReader {
 
 	//Add variables for Documents
-
 	
 	//Above code is added for Documents
 
 	public static void main(String[] args) {
 		//This is the path of the xml file, going forward to be added as input argument
 		
-		String inputXML="/Users/rishirais/Downloads/For OCR SERVICES/For OCR SERVICES/XML/RNK_20140815_00_A_002_V00.xml";
-		String inputImageFile="/Users/rishirais/Downloads/For OCR SERVICES/For OCR SERVICES/JPG/RNK_20140815_00_A_002_V00.jpg";
+		String inputXML="/Users/rishirais/Downloads/For OCR SERVICES/For OCR SERVICES/XML/RNK_20140815_00_A_001_V00.xml";
+		String inputImageFile="/Users/rishirais/Downloads/For OCR SERVICES/For OCR SERVICES/JPG/RNK_20140815_00_A_001_V00.jpg";
 		
 		//Document type declared
 		List<Document> docList=parseDocumentXML(inputXML);
