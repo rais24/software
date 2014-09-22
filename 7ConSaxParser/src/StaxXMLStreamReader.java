@@ -19,21 +19,49 @@ public class StaxXMLStreamReader {
 	public static void main(String[] args) {
 		//This is the path of the xml file, going forward to be added as input argument
 		
-		String inputXML="/Users/rishirais/Downloads/For OCR SERVICES/For OCR SERVICES/XML/RNK_20140815_00_A_001_V00.xml";
-		String inputImageFile="/Users/rishirais/Downloads/For OCR SERVICES/For OCR SERVICES/JPG/RNK_20140815_00_A_001_V00.jpg";
+		String inputXML="/Users/rishirais/Downloads/Test/XML/RNK_20140915_00_A_003_V00.xml";
+		String inputImageFile="/Users/rishirais/Downloads/Test/JPG/RNK_20140915_00_A_003_V00.jpg";
+		String getFilepathParseArray[]= inputXML.split("/");
+		String getFileName=getFilepathParseArray[getFilepathParseArray.length-1];
+	//	System.out.println("The filename is : " +getFileName);
+		
+		//String inputXML=args[0];
+		//String inputImageFile=args[1];
 		
 		//Document type declared
 		List<Document> docList=parseDocumentXML(inputXML);
+	//	System.out.println("The size of the doc list is :"+docList.size());
 		for(Document doc : docList){
 			
-			//This is used to fill the object with the text extracted from Tesseract
-			doc.headline=TesseractExtractor.getImageText(doc.headline.getRectpoint(), inputImageFile, doc.headline);
-			doc.subheadline=TesseractExtractor.getImageText(doc.subheadline.getRectpoint(), inputImageFile, doc.subheadline);
-			doc.byline=TesseractExtractor.getImageText(doc.byline.getRectpoint(), inputImageFile, doc.byline);
-			doc.photocredit=TesseractExtractor.getImageText(doc.photocredit.getRectpoint(), inputImageFile, doc.photocredit);
-			doc.caption=TesseractExtractor.getImageText(doc.caption.getRectpoint(), inputImageFile, doc.caption);
-			doc.text=TesseractExtractor.getImageText(doc.text.getRectpoint(), inputImageFile, doc.text);
 			
+			//This is used to fill the object with the text extracted from Tesseract
+			if(doc.headline!=null)
+			{
+			doc.headline=TesseractExtractor.getImageText(doc.headline.getRectpoint(), inputImageFile, doc.headline);
+			}
+			if(doc.subheadline!=null)
+			{
+			doc.subheadline=TesseractExtractor.getImageText(doc.subheadline.getRectpoint(), inputImageFile, doc.subheadline);
+			}
+			
+			if(doc.byline!=null)
+			{
+			doc.byline=TesseractExtractor.getImageText(doc.byline.getRectpoint(), inputImageFile, doc.byline);
+			}
+			//Some advertisements do not have photographs
+			if(doc.photocredit!=null)
+			{
+			doc.photocredit=TesseractExtractor.getImageText(doc.photocredit.getRectpoint(), inputImageFile, doc.photocredit);
+			}
+			
+			if(doc.caption!=null)
+			{
+			doc.caption=TesseractExtractor.getImageText(doc.caption.getRectpoint(), inputImageFile, doc.caption);
+			}
+			if(doc.text!=null)
+			{
+			doc.text=TesseractExtractor.getImageText(doc.text.getRectpoint(), inputImageFile, doc.text);
+			}
 			
 		//	System.out.println("Headline is : " +doc.headline.getExtractedText());
 			
@@ -47,7 +75,7 @@ public class StaxXMLStreamReader {
 			
 		//	System.out.println("Text is : " +doc.text.getExtractedText());
 			CreateOutputXML output= new CreateOutputXML();
-			output.CreateXML(doc);
+			output.CreateXML(doc,getFileName);
 	
 		   
 			   

@@ -1,18 +1,28 @@
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+
+
 public class CreateOutputXML {
 
 		//This is the method to create the output xml file
-	public void CreateXML(Document Doc)
+	public void CreateXML(Document Doc,String fileName)
 	{
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		
+		
+		
 		 try {
-		     XMLStreamWriter writer = factory.createXMLStreamWriter(new FileWriter("output2.xml"));
+		     
+			 factory.setProperty("escapeCharacters", false);
+			 
+			 XMLStreamWriter writer = factory.createXMLStreamWriter(new FileWriter("/Users/rishirais/Downloads/Test/Output/"+fileName,true));
+		//	 XMLStreamWriter writer = factory.createXMLStreamWriter(new BufferedWriter("/Users/rishirais/Downloads/Test/Output/output2.xml"));
+
 		     writer.writeStartDocument();
 		     //Element No 1 - Page Start
 		     writer.writeCharacters("\n\t");
@@ -30,9 +40,18 @@ public class CreateOutputXML {
 		     
 		     writer.writeStartElement("OuterZone");
 		     writer.writeAttribute("id", Doc.outerzone.getId());
+		     if( Doc.outerzone.getLinkid()!=null)
+		     {
 		     writer.writeAttribute("linkid", Doc.outerzone.getLinkid());
-		     writer.writeAttribute("linkpage", Doc.outerzone.getLinkpage());
-		     writer.writeAttribute("_linkFrom", Doc.outerzone.getLinkfrom());
+		     }
+		     if(Doc.outerzone.getLinkpage()!=null)
+		     {
+		    	 writer.writeAttribute("linkpage", Doc.outerzone.getLinkpage());
+		     }
+		     if(Doc.outerzone.getLinkfrom()!=null)
+		     {
+		    		 writer.writeAttribute("_linkFrom", Doc.outerzone.getLinkfrom());
+		     }
 		     writer.writeAttribute("Type", Doc.outerzone.getType());
 		     writer.writeAttribute("Rectpoint", Doc.outerzone.getRectpoint());
 		     writer.writeAttribute("AdvType", Doc.outerzone.getArticletype());
@@ -43,6 +62,8 @@ public class CreateOutputXML {
 		     writer.writeCharacters("\n\t");
 		     
 		     //Element No 4 - Headline start
+		    if(Doc.headline!=null)
+		    {
 		     writer.writeStartElement("Headline");
 		     writer.writeAttribute("id", Doc.headline.getId());
 		     writer.writeAttribute("Type", Doc.headline.getType());
@@ -50,13 +71,24 @@ public class CreateOutputXML {
 		     writer.writeAttribute("Polypoint", Doc.headline.getPolypoint());
 		     writer.writeAttribute("rotate", Doc.headline.getRotate());
 		     writer.writeAttribute("inverse", Doc.headline.getInverse());
-		     writer.writeCharacters(Doc.headline.getExtractedText());
+		   
+		    
+		     
+		     //writer.writeComment("<p>");
+		     
+		     //writer.writeCData("<p>");
+		     writer.writeCharacters("<p>");
+		     writer.writeCharacters(Doc.headline.getExtractedText().trim());
+		     writer.writeCharacters("</p>");
 		     writer.writeEndElement();
 		     
 		     //Element No 4 - Headline End
 		     writer.writeCharacters("\n\t");
+		    }
 		     //Element No 5 - Subheadline start
 		     
+		      if(Doc.subheadline!=null)
+		      {
 		     writer.writeStartElement("Subheadline");
 		     writer.writeAttribute("id", Doc.subheadline.getId());
 		     writer.writeAttribute("Type", Doc.subheadline.getType());
@@ -64,13 +96,18 @@ public class CreateOutputXML {
 		     writer.writeAttribute("Polypoint", Doc.subheadline.getPolypoint());
 		     writer.writeAttribute("rotate", Doc.subheadline.getRotate());
 		     writer.writeAttribute("inverse", Doc.subheadline.getInverse());
-		     writer.writeCharacters(Doc.subheadline.getExtractedText());
-		     writer.writeEndElement();
+		     writer.writeCharacters("<p>");
 		     
-		     //Element No 5 - Subheadline end
+		     writer.writeCharacters(Doc.subheadline.getExtractedText().trim());
+ 		     writer.writeCharacters("</p>");
+		     writer.writeEndElement();
+		    //Element No 5 - Subheadline end
 		     writer.writeCharacters("\n\t");
+		      }
 		     //Element No 6 - ByLine Start
 		     
+		     if(Doc.byline!=null)
+		     {
 		     writer.writeStartElement("Byline");
 		     writer.writeAttribute("id", Doc.byline.getId());
 		     writer.writeAttribute("Type", Doc.byline.getType());
@@ -78,13 +115,18 @@ public class CreateOutputXML {
 		     writer.writeAttribute("Polypoint", Doc.byline.getPolypoint());
 		     writer.writeAttribute("rotate", Doc.byline.getRotate());
 		     writer.writeAttribute("inverse", Doc.byline.getInverse());
-		     writer.writeCharacters(Doc.byline.getExtractedText());
+		     writer.writeCharacters("<p>");
+		     writer.writeCharacters(Doc.byline.getExtractedText().trim());
+		     writer.writeCharacters("</p>");
 		     writer.writeEndElement();
 		     
 		     //Element No 6 - Byline End
 		     writer.writeCharacters("\n\t");
+		     }
 		     //Element No 7 -  Image Start
-		     
+		    
+		     if(Doc.image!=null)
+		     {
 		     writer.writeStartElement("Image");
 		     writer.writeAttribute("id", Doc.image.getId());
 		     writer.writeAttribute("Type", Doc.image.getType());
@@ -94,10 +136,13 @@ public class CreateOutputXML {
 		     writer.writeAttribute("inverse", Doc.image.getInverse());
 		     writer.writeAttribute("pageid", Doc.image.getPageid());
 		     writer.writeEndElement();
-		     
-		     //Element No 7 - Image End
+		      //Element No 7 - Image End
 		     writer.writeCharacters("\n\t");
+		     }
 		     // Element No 8 - Photocredit Starts
+		     
+		     if(Doc.photocredit!=null)
+		     {
 		     writer.writeStartElement("Photocredit");
 		     writer.writeAttribute("id", Doc.photocredit.getId());
 		     writer.writeAttribute("Type", Doc.photocredit.getType());
@@ -105,12 +150,18 @@ public class CreateOutputXML {
 		     writer.writeAttribute("Polypoint", Doc.photocredit.getPolypoint());
 		     writer.writeAttribute("rotate", Doc.photocredit.getRotate());
 		     writer.writeAttribute("inverse", Doc.photocredit.getInverse());
-		     writer.writeCharacters(Doc.photocredit.getExtractedText());
+		     writer.writeCharacters("<p>");
+		     writer.writeCharacters(Doc.photocredit.getExtractedText().trim());
+		     writer.writeCharacters("</p>");
 		     writer.writeEndElement();
+		     }
 		     // Element No 8 -  Photocredit End
 		     
 		     writer.writeCharacters("\n\t");
 		     //Element No 9 - Caption Start
+		     
+		     if(Doc.caption!=null)
+		     {
 		     writer.writeStartElement("Caption");
 		     writer.writeAttribute("id", Doc.caption.getId());
 		     writer.writeAttribute("Type", Doc.caption.getType());
@@ -118,9 +169,11 @@ public class CreateOutputXML {
 		     writer.writeAttribute("Polypoint", Doc.caption.getPolypoint());
 		     writer.writeAttribute("rotate", Doc.caption.getRotate());
 		     writer.writeAttribute("inverse", Doc.caption.getInverse());
-		     writer.writeCharacters(Doc.caption.getExtractedText());
+		     writer.writeCharacters("<p>");
+		     writer.writeCharacters(Doc.caption.getExtractedText().trim());
+		     writer.writeCharacters("</p>");
 		     writer.writeEndElement();
-		     
+		     }
 		     //Element No 9 - Caption End
 		     writer.writeCharacters("\n\t");
 		     //Element No 10 - Text Start
@@ -131,7 +184,9 @@ public class CreateOutputXML {
 		     writer.writeAttribute("Polypoint", Doc.text.getPolypoint());
 		     writer.writeAttribute("rotate", Doc.text.getRotate());
 		     writer.writeAttribute("inverse", Doc.text.getInverse());
-		     writer.writeCharacters(Doc.text.getExtractedText());
+		     writer.writeCharacters("<p>");
+		     writer.writeCharacters(Doc.text.getExtractedText().trim());
+		     writer.writeCharacters("</p>");
 		     writer.writeEndElement();
 		     
 		     //Element No 10 - Text End
