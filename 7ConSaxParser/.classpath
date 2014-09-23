@@ -9,5 +9,7 @@
 	<classpathentry kind="lib" path="/Users/rishirais/Downloads/Tess4J/lib/ghost4j-0.5.1.jar"/>
 	<classpathentry kind="lib" path="/Users/rishirais/Downloads/Tess4J/lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="/Users/rishirais/Downloads/Tess4J/dist/tess4j.jar"/>
+	<classpathentry kind="lib" path="/Users/rishirais/Downloads/commons-lang3-3.3.2/commons-lang3-3.3.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="/Users/rishirais/Downloads/commons-lang3-3.3.2/commons-lang3-3.3.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -23,14 +23,10 @@ public class StaxXMLStreamReader {
 		String inputImageFile="/Users/rishirais/Downloads/Test/JPG/RNK_20140915_00_A_003_V00.jpg";
 		String getFilepathParseArray[]= inputXML.split("/");
 		String getFileName=getFilepathParseArray[getFilepathParseArray.length-1];
-	//	System.out.println("The filename is : " +getFileName);
-		
-		//String inputXML=args[0];
-		//String inputImageFile=args[1];
 		
 		//Document type declared
 		List<Document> docList=parseDocumentXML(inputXML);
-	//	System.out.println("The size of the doc list is :"+docList.size());
+		
 		for(Document doc : docList){
 			
 			
@@ -63,22 +59,9 @@ public class StaxXMLStreamReader {
 			doc.text=TesseractExtractor.getImageText(doc.text.getRectpoint(), inputImageFile, doc.text);
 			}
 			
-		//	System.out.println("Headline is : " +doc.headline.getExtractedText());
-			
-		//	System.out.println("Sub Headline is :" +doc.subheadline.getExtractedText());
-			
-		//	System.out.println("ByLine is :" +doc.byline.getExtractedText());
-			
-		//	System.out.println("PhotoCredit is :" +doc.photocredit.getExtractedText());
-			
-		//	System.out.println("Caption is :" +doc.caption.getExtractedText());
-			
-		//	System.out.println("Text is : " +doc.text.getExtractedText());
 			CreateOutputXML output= new CreateOutputXML();
-			output.CreateXML(doc,getFileName);
-	
+			output.CreateXML(doc,getFileName,docList.size());
 		   
-			   
 		}
 	}
 
@@ -90,7 +73,6 @@ public class StaxXMLStreamReader {
 		XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
 		try {
 			XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new FileInputStream(fileName));
-			//System.out.println("Going here -2 "); 
 			allocator= new DataAllocator();
 			int event = xmlStreamReader.getEventType();
 			while(true){
@@ -152,11 +134,8 @@ public class StaxXMLStreamReader {
 		} catch (FileNotFoundException  e) {
 			e.printStackTrace();
 		} catch (XMLStreamException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return docList;
 	}
-
-
 }
