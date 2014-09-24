@@ -27,11 +27,11 @@ public class StaxXMLStreamReader {
 		//output file folder
 		
 		
-		String inputXML="/Users/rishirais/Downloads/Test/XML/RNK_20140915_00_B_008_V00.xml";
-		String inputImageFile="/Users/rishirais/Downloads/Test/JPG/RNK_20140915_00_B_008_V00.jpg";
+		//String inputXML="/Users/rishirais/Downloads/Test/XML/RNK_20140915_00_B_008_V00.xml";
+	//	String inputImageFile="/Users/rishirais/Downloads/Test/JPG/RNK_20140915_00_B_008_V00.jpg";
 		
-		//String inputXML=xmlfilepath;
-	//	String inputImageFile=imagefilepath;
+		String inputXML=args[0];
+		String inputImageFile=args[1];
 		
 		
 		String getFilepathParseArray[]= inputXML.split("/");
@@ -39,11 +39,9 @@ public class StaxXMLStreamReader {
 		
 		
 		//String outputfilePath=outputfolderpath+"/"+ getFileName;
-		String outputfilePath="/Users/rishirais/Downloads/Test/Output/"+getFileName;
-		//System.out.println("System Message : The input xml file location is : " +xmlfilepath);
-		//System.out.println("System Message : The input jpg file location is : " +imagefilepath);
-		
-		System.out.println("System Message : The output file location is : " +outputfilePath);
+		//String outputfilePath="/Users/rishirais/Downloads/Test/Output/"+getFileName;
+		String outputfilePath=args[2]+getFileName;
+
 		//Document type declared
 		List<Document> docList=parseDocumentXML(inputXML);
 		
@@ -173,7 +171,6 @@ public class StaxXMLStreamReader {
 							doc.multipletext= new ArrayList<CommanData>();
 						}
 						doc.multipletext.add(doc.text);
-						System.out.println("Adding to Text CommanData List");
 					}
 					break;
 

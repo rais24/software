@@ -285,7 +285,6 @@ public class CreateOutputXML {
 
 					for(int i=0; i<splitParagraphs.length;i++)
 					{
-						System.out.println("Going inside the split");
 						writer.writeCharacters("\n\t");
 						writer.writeCharacters("<p>");
 						//writer.writeCharacters(Doc.text.getExtractedText().trim());
@@ -314,8 +313,6 @@ public class CreateOutputXML {
 			writer.flush();
 			writer.close();
 			count++;
-
-			System.out.println("System Message : Output Generated for Document : " + count+1);
 
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
