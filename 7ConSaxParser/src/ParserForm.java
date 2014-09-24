@@ -52,8 +52,16 @@ public class ParserForm {
 		
 		Panel panel = new Panel();
 		panel.setBackground(Color.LIGHT_GRAY);
-		panel.setBounds(10, 10, 430, 51);
+		panel.setBounds(10, 10, 430, 70);
 		frame.getContentPane().add(panel);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("/Users/rishirais/Downloads/dd-logo-50X50.png"));
+		panel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon("/Users/rishirais/Downloads/7con-logo-50X50.png"));
+		panel.add(lblNewLabel_1);
 		
 		Label label = new Label("XML Input Path");
 		label.setBounds(22, 112, 66, 17);
@@ -122,9 +130,6 @@ public class ParserForm {
 		     
 		            int rVal = fileChooser.showOpenDialog(null);
 		            if (rVal == JFileChooser.APPROVE_OPTION) {textField_1.setText(fileChooser.getSelectedFile().toString());}
-			
-			
-			
 			}
 		});
 		button_1.setBounds(318, 141, 102, 28);
@@ -158,11 +163,8 @@ public class ParserForm {
 			{
 			
 			StaxXMLStreamReader load= new StaxXMLStreamReader();
-			load.runEngine(textField.getText(), textField_1.getText(), textField_2.getText());
+			//load.runEngine(textField.getText(), textField_1.getText(), textField_2.getText());
 				//Here we add the Code to call the Parsing
-				
-				
-			
 			}
 		});
 		button_3.setBounds(168, 228, 102, 28);

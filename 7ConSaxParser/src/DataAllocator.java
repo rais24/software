@@ -12,9 +12,7 @@ public class DataAllocator {
 		for(int i=0;i<noofattributes;i++)
 		{
 			String docattribute=xmlStreamReader.getAttributeLocalName(i);
-			//System.out.println("The attribute name is :" +docattribute);
-			//System.out.println("The attribute value is"+xmlStreamReader.getAttributeValue(i));
-			
+		
 			if(docattribute.equalsIgnoreCase("id")) 
 			{
 				dataObj.setId(xmlStreamReader.getAttributeValue(i).toString());	  

@@ -12,6 +12,8 @@ public class CreateOutputXML {
 	public void CreateXML(Document Doc,String fileName,int noDocs)
 	{
 
+		System.out.println("System Message :  The output xml is being created at : " + fileName);
+
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 
 		try {
@@ -32,7 +34,7 @@ public class CreateOutputXML {
 				writer.writeAttribute("Type", "");
 				writer.writeAttribute("Percentage", "");
 				writer.writeAttribute("Category", "");
-	
+
 			}
 			writer.writeCharacters("\n\t");
 			//Element No 2 - Adv Start
@@ -122,7 +124,7 @@ public class CreateOutputXML {
 			}
 			//Element No 7 -  Image Start
 
-			if(Doc.image!=null)
+		/*	if(Doc.image!=null)
 			{
 				writer.writeStartElement("Image");
 				writer.writeAttribute("id", Doc.image.getId());
@@ -136,9 +138,30 @@ public class CreateOutputXML {
 				//Element No 7 - Image End
 				writer.writeCharacters("\n\t");
 			}
+			*/
+			if(Doc.multipleimage!=null)
+			{
+				for(CommanData imageData:Doc.multipleimage)
+				{
+				writer.writeStartElement("Image");
+				writer.writeAttribute("id", imageData.getId());
+				writer.writeAttribute("Type", imageData.getType());
+				writer.writeAttribute("Rectpoint", imageData.getRectpoint());
+				writer.writeAttribute("Polypoint", imageData.getPolypoint());
+				writer.writeAttribute("rotate", imageData.getRotate());
+				writer.writeAttribute("inverse", imageData.getInverse());
+				writer.writeAttribute("pageid", imageData.getPageid());
+				writer.writeEndElement();
+				//Element No 7 - Image End
+				writer.writeCharacters("\n\t");
+				}
+			}
+			
+			
+			
 			// Element No 8 - Photocredit Starts
 
-			if(Doc.photocredit!=null)
+			/*if(Doc.photocredit!=null)
 			{
 				writer.writeStartElement("Photocredit");
 				writer.writeAttribute("id", Doc.photocredit.getId());
@@ -152,13 +175,31 @@ public class CreateOutputXML {
 				writer.writeCharacters("</p>");
 				writer.writeEndElement();
 				writer.writeCharacters("\n\t");
-			}
+			}*/
 			// Element No 8 -  Photocredit End
 
+			if(Doc.multiplephotocredit!=null)
+			{
+				for(CommanData photocreditData:Doc.multiplephotocredit)
+				{
+				writer.writeStartElement("Photocredit");
+				writer.writeAttribute("id", photocreditData.getId());
+				writer.writeAttribute("Type", photocreditData.getType());
+				writer.writeAttribute("Rectpoint", photocreditData.getRectpoint());
+				writer.writeAttribute("Polypoint", photocreditData.getPolypoint());
+				writer.writeAttribute("rotate", photocreditData.getRotate());
+				writer.writeAttribute("inverse", photocreditData.getInverse());
+				writer.writeCharacters("<p>");
+				writer.writeCharacters(photocreditData.getExtractedText().trim());
+				writer.writeCharacters("</p>");
+				writer.writeEndElement();
+				writer.writeCharacters("\n\t");
+				}
+			}
 
 			//Element No 9 - Caption Start
 
-			if(Doc.caption!=null)
+		/*	if(Doc.caption!=null)
 			{
 				writer.writeStartElement("Caption");
 				writer.writeAttribute("id", Doc.caption.getId());
@@ -172,11 +213,33 @@ public class CreateOutputXML {
 				writer.writeCharacters("</p>");
 				writer.writeEndElement();
 				writer.writeCharacters("\n\t");
+			}*/
+			
+			
+			if(Doc.multiplecaption!=null)
+			{
+				for(CommanData multiplecaptionData:Doc.multiplecaption)
+				{
+				writer.writeStartElement("Caption");
+				writer.writeAttribute("id", multiplecaptionData.getId());
+				writer.writeAttribute("Type", multiplecaptionData.getType());
+				writer.writeAttribute("Rectpoint", multiplecaptionData.getRectpoint());
+				writer.writeAttribute("Polypoint", multiplecaptionData.getPolypoint());
+				writer.writeAttribute("rotate", multiplecaptionData.getRotate());
+				writer.writeAttribute("inverse", multiplecaptionData.getInverse());
+				writer.writeCharacters("<p>");
+				writer.writeCharacters(multiplecaptionData.getExtractedText().trim());
+				writer.writeCharacters("</p>");
+				writer.writeEndElement();
+				writer.writeCharacters("\n\t");
+				}
 			}
+			
+			
 			//Element No 9 - Caption End
 
 
-			if(Doc.text!=null)
+		/*	if(Doc.text!=null)
 			{
 				//Element No 10 - Text Start
 				writer.writeStartElement("Text");
@@ -186,15 +249,12 @@ public class CreateOutputXML {
 				writer.writeAttribute("Polypoint", Doc.text.getPolypoint());
 				writer.writeAttribute("rotate", Doc.text.getRotate());
 				writer.writeAttribute("inverse", Doc.text.getInverse());
-				
-				
-				
+
 				String[] splitParagraphs=Doc.text.getExtractedText().split("\n\n");
-				
-				
-				
+
 				for(int i=0; i<splitParagraphs.length;i++)
 				{
+					System.out.println("Going inside the split");
 					writer.writeCharacters("\n\t");
 					writer.writeCharacters("<p>");
 					//writer.writeCharacters(Doc.text.getExtractedText().trim());
@@ -202,11 +262,44 @@ public class CreateOutputXML {
 					writer.writeCharacters("</p>");
 				}
 				//writer.writeCharacters(replacedText);
-				
+
 				writer.writeEndElement();
+			}*/
+
+
+			if(Doc.multipletext!=null)
+			{
+
+				for(CommanData textData:Doc.multipletext)
+				{
+					//Element No 10 - Text Start
+					writer.writeStartElement("Text");
+					writer.writeAttribute("id", textData.getId());
+					writer.writeAttribute("Type", textData.getType());
+					writer.writeAttribute("Rectpoint", textData.getRectpoint());
+					writer.writeAttribute("Polypoint", textData.getPolypoint());
+					writer.writeAttribute("rotate", textData.getRotate());
+					writer.writeAttribute("inverse", textData.getInverse());
+
+					String[] splitParagraphs=textData.getExtractedText().split("\n\n");
+
+					for(int i=0; i<splitParagraphs.length;i++)
+					{
+						System.out.println("Going inside the split");
+						writer.writeCharacters("\n\t");
+						writer.writeCharacters("<p>");
+						//writer.writeCharacters(Doc.text.getExtractedText().trim());
+						writer.writeCharacters(splitParagraphs[i].trim());
+						writer.writeCharacters("</p>");
+					}
+					//writer.writeCharacters(replacedText);
+
+					writer.writeEndElement();
+					writer.writeCharacters("\n\t");
+				}
 			}
+
 			//Element No 10 - Text End
-			writer.writeCharacters("\n\t");
 
 			writer.writeEndElement();
 
@@ -222,11 +315,14 @@ public class CreateOutputXML {
 			writer.close();
 			count++;
 
+			System.out.println("System Message : Output Generated for Document : " + count+1);
+
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		
+		System.out.println("System Message :  All Outputs are generated");
 	}
 }
 

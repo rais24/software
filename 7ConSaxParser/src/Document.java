@@ -1,3 +1,5 @@
+import java.util.List;
+
 
 
 //These are the elements of each pdf page or article.
@@ -10,7 +12,13 @@ public class Document {
 	public  CommanData photocredit;
 	public  CommanData caption;
 	public  CommanData text;
-
+    public List<CommanData> multipletext;
+    public List<CommanData> multipleimage;
+    public List<CommanData> multiplephotocredit;
+    public List<CommanData> multiplecaption;
+    
+    
+    
 	public CommanData getOuterzone() {
 		return outerzone;
 	}
@@ -73,6 +81,36 @@ public class Document {
 	public void setText(CommanData text) {
 		this.text = text;
 	}
+	
+	public List<CommanData> getMultipleText() {
+		return (List<CommanData>) multipletext;
+	}
+	public void setMultipleText(CommanData multipletext) {
+		this.multipletext = (List<CommanData>) multipletext;
+	}
+	
+	public List<CommanData> getMultipleImage(){
+		return (List<CommanData>) multipleimage;
+	}
+	public void setMultipleImage(CommanData multipleimage) {
+		this.multipleimage = (List<CommanData>) multipleimage;
+	}
+	
+	
+	public List<CommanData> getMultiplePhotocredit(){
+		return (List<CommanData>) multiplephotocredit;
+	}
+	public void setMultiplePhotocredit(CommanData multiplephotocredit) {
+		this.multiplephotocredit = (List<CommanData>) multiplephotocredit;
+	}
+	
+	public List<CommanData> getMultipleCaption(){
+		return (List<CommanData>) multiplecaption;
+	}
+	public void setMultipleCaption(CommanData multiplecaption) {
+		this.multiplecaption = (List<CommanData>) multiplecaption;
+	}
+	
 	public void setId(int parseInt) {
 		// TODO Auto-generated method stub
 		

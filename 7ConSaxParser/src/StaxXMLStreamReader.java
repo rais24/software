@@ -16,58 +16,82 @@ public class StaxXMLStreamReader {
 	
 	//Above code is added for Documents
 
-	public void runEngine(String xmlfilepath, String imagefilepath, String outputfolderpath) {
+	//public static void runEngine(String xmlfilepath, String imagefilepath, String outputfolderpath)
+	public static void main(String[] args)
+	{
 		//This is the path of the xml file, going forward to be added as input argument
 		
-		//String inputXML="/Users/rishirais/Downloads/Test/XML/RNK_20140915_00_A_003_V00.xml";
-		//String inputImageFile="/Users/rishirais/Downloads/Test/JPG/RNK_20140915_00_A_003_V00.jpg";
+		//Add 3 inputs
+		//inout xml file path
+		//input jpg file path
+		//output file folder
 		
-		String inputXML=xmlfilepath;
-		String inputImageFile=imagefilepath;
+		
+		String inputXML="/Users/rishirais/Downloads/Test/XML/RNK_20140915_00_B_008_V00.xml";
+		String inputImageFile="/Users/rishirais/Downloads/Test/JPG/RNK_20140915_00_B_008_V00.jpg";
+		
+		//String inputXML=xmlfilepath;
+	//	String inputImageFile=imagefilepath;
 		
 		
 		String getFilepathParseArray[]= inputXML.split("/");
 		String getFileName=getFilepathParseArray[getFilepathParseArray.length-1];
 		
-		String outputfilePath=outputfolderpath+"/"+ getFileName;
+		
+		//String outputfilePath=outputfolderpath+"/"+ getFileName;
+		String outputfilePath="/Users/rishirais/Downloads/Test/Output/"+getFileName;
+		//System.out.println("System Message : The input xml file location is : " +xmlfilepath);
+		//System.out.println("System Message : The input jpg file location is : " +imagefilepath);
+		
+		System.out.println("System Message : The output file location is : " +outputfilePath);
 		//Document type declared
 		List<Document> docList=parseDocumentXML(inputXML);
 		
+		System.out.println("Status Message : Engine Running, total number of Documents is :" + docList.size());
 		for(Document doc : docList){
 			
-			
+			System.out.println("System Message : Processing coordinates using Tesseract");
 			//This is used to fill the object with the text extracted from Tesseract
 			if(doc.headline!=null)
 			{
-			doc.headline=TesseractExtractor.getImageText(doc.headline.getRectpoint(), inputImageFile, doc.headline);
+			   
+				doc.headline=TesseractExtractor.getImageText(doc.headline.getRectpoint(), inputImageFile, doc.headline);
 			}
 			if(doc.subheadline!=null)
 			{
+				
 			doc.subheadline=TesseractExtractor.getImageText(doc.subheadline.getRectpoint(), inputImageFile, doc.subheadline);
 			}
 			
 			if(doc.byline!=null)
 			{
+				
 			doc.byline=TesseractExtractor.getImageText(doc.byline.getRectpoint(), inputImageFile, doc.byline);
 			}
 			//Some advertisements do not have photographs
 			if(doc.photocredit!=null)
 			{
+				
 			doc.photocredit=TesseractExtractor.getImageText(doc.photocredit.getRectpoint(), inputImageFile, doc.photocredit);
+			doc.multiplephotocredit=TesseractExtractor.getImageText(inputImageFile,doc.multiplephotocredit);
+			
 			}
 			
 			if(doc.caption!=null)
 			{
-			doc.caption=TesseractExtractor.getImageText(doc.caption.getRectpoint(), inputImageFile, doc.caption);
+				
+		//	doc.caption=TesseractExtractor.getImageText(doc.caption.getRectpoint(), inputImageFile, doc.caption);
+			doc.multiplecaption=TesseractExtractor.getImageText(inputImageFile,doc.multiplecaption);
 			}
 			if(doc.text!=null)
 			{
-			doc.text=TesseractExtractor.getImageText(doc.text.getRectpoint(), inputImageFile, doc.text);
+			
+		//	doc.text=TesseractExtractor.getImageText(doc.text.getRectpoint(), inputImageFile, doc.text);
+			doc.multipletext=TesseractExtractor.getImageText(inputImageFile,doc.multipletext);
 			}
 			
 			CreateOutputXML output= new CreateOutputXML();
 			output.CreateXML(doc,outputfilePath,docList.size());
-		   
 		}
 	}
 
@@ -75,13 +99,18 @@ public class StaxXMLStreamReader {
 
 		List<Document> docList = new ArrayList<Document>();
 		Document doc = null;
+		
 		DataAllocator allocator=null;
 		XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
 		try {
 			XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new FileInputStream(fileName));
 			allocator= new DataAllocator();
+			
 			int event = xmlStreamReader.getEventType();
+			//List<CommanData> textList=new List<CommanData>();
+			System.out.println("Status Message : Going through Document");
 			while(true){
+				
 				switch(event) {
 
 				case XMLStreamConstants.START_ELEMENT:
@@ -90,6 +119,7 @@ public class StaxXMLStreamReader {
 						//This populates the Document object
 					}else if(xmlStreamReader.getLocalName().equals("OuterZone")){
 						doc = new Document();
+						
 						doc.outerzone= new CommanData();
 						doc.setId(Integer.parseInt(xmlStreamReader.getAttributeValue(0)));
 						doc.outerzone=allocator.FillObject(xmlStreamReader, doc.outerzone);
@@ -109,19 +139,41 @@ public class StaxXMLStreamReader {
 					}else if(xmlStreamReader.getLocalName().equals("Image")){
 						doc.image=new CommanData();
 						doc.image=allocator.FillObject(xmlStreamReader, doc.image);
+						if(doc.multipleimage==null)
+						{
+							doc.multipleimage= new ArrayList<CommanData>();
+						}
+						doc.multipleimage.add(doc.image);
+						
 						
 					}else if(xmlStreamReader.getLocalName().equals("Photocredit")){
 						doc.photocredit=new CommanData();
 						doc.photocredit=allocator.FillObject(xmlStreamReader, doc.photocredit);
+						if(doc.multiplephotocredit==null)
+						{
+							doc.multiplephotocredit= new ArrayList<CommanData>();
+						}
+						doc.multiplephotocredit.add(doc.photocredit);
+						
 						
 					}else if(xmlStreamReader.getLocalName().equals("Caption")){
 						doc.caption=new CommanData();
 						doc.caption=allocator.FillObject(xmlStreamReader, doc.caption);
-					
+						if(doc.multiplecaption==null)
+						{
+							doc.multiplecaption= new ArrayList<CommanData>();
+						}
+						doc.multiplecaption.add(doc.caption);
+						
 					}else if(xmlStreamReader.getLocalName().equals("Text")){
 						doc.text=new CommanData();
 						doc.text=allocator.FillObject(xmlStreamReader, doc.text);
-						
+						if(doc.multipletext==null)
+						{
+							doc.multipletext= new ArrayList<CommanData>();
+						}
+						doc.multipletext.add(doc.text);
+						System.out.println("Adding to Text CommanData List");
 					}
 					break;
 
