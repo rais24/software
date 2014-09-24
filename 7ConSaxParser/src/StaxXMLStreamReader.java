@@ -16,14 +16,20 @@ public class StaxXMLStreamReader {
 	
 	//Above code is added for Documents
 
-	public static void main(String[] args) {
+	public void runEngine(String xmlfilepath, String imagefilepath, String outputfolderpath) {
 		//This is the path of the xml file, going forward to be added as input argument
 		
-		String inputXML="/Users/rishirais/Downloads/Test/XML/RNK_20140915_00_A_003_V00.xml";
-		String inputImageFile="/Users/rishirais/Downloads/Test/JPG/RNK_20140915_00_A_003_V00.jpg";
+		//String inputXML="/Users/rishirais/Downloads/Test/XML/RNK_20140915_00_A_003_V00.xml";
+		//String inputImageFile="/Users/rishirais/Downloads/Test/JPG/RNK_20140915_00_A_003_V00.jpg";
+		
+		String inputXML=xmlfilepath;
+		String inputImageFile=imagefilepath;
+		
+		
 		String getFilepathParseArray[]= inputXML.split("/");
 		String getFileName=getFilepathParseArray[getFilepathParseArray.length-1];
 		
+		String outputfilePath=outputfolderpath+"/"+ getFileName;
 		//Document type declared
 		List<Document> docList=parseDocumentXML(inputXML);
 		
@@ -60,7 +66,7 @@ public class StaxXMLStreamReader {
 			}
 			
 			CreateOutputXML output= new CreateOutputXML();
-			output.CreateXML(doc,getFileName,docList.size());
+			output.CreateXML(doc,outputfilePath,docList.size());
 		   
 		}
 	}

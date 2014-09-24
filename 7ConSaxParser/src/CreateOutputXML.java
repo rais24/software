@@ -18,14 +18,14 @@ public class CreateOutputXML {
 
 			factory.setProperty("escapeCharacters", false);
 
-			XMLStreamWriter	writer = factory.createXMLStreamWriter(new FileWriter("/Users/rishirais/Downloads/Test/Output/"+fileName,true));
+			XMLStreamWriter	writer = factory.createXMLStreamWriter(new FileWriter(fileName,true));
 
 			//This part should only be written once hence only for first document
 
 			if(count==0)
 
 			{
-				writer.writeCharacters("<?xml version= \"1.0\" encoding=\"UTF-8?\"?>");
+				writer.writeCharacters("<?xml version= \"1.0\" encoding=\"UTF-8\"?>");
 				//Element No 1 - Page Start
 				writer.writeCharacters("\n\t");
 				writer.writeStartElement("page");
@@ -186,12 +186,23 @@ public class CreateOutputXML {
 				writer.writeAttribute("Polypoint", Doc.text.getPolypoint());
 				writer.writeAttribute("rotate", Doc.text.getRotate());
 				writer.writeAttribute("inverse", Doc.text.getInverse());
-				writer.writeCharacters("<p>");
 				
-				String replacedText=Doc.text.getExtractedText().replace("/r/n", "</br>");
-				//writer.writeCharacters(Doc.text.getExtractedText().trim());
-				writer.writeCharacters(replacedText);
-				writer.writeCharacters("</p>");
+				
+				
+				String[] splitParagraphs=Doc.text.getExtractedText().split("\n\n");
+				
+				
+				
+				for(int i=0; i<splitParagraphs.length;i++)
+				{
+					writer.writeCharacters("\n\t");
+					writer.writeCharacters("<p>");
+					//writer.writeCharacters(Doc.text.getExtractedText().trim());
+					writer.writeCharacters(splitParagraphs[i].trim());
+					writer.writeCharacters("</p>");
+				}
+				//writer.writeCharacters(replacedText);
+				
 				writer.writeEndElement();
 			}
 			//Element No 10 - Text End
@@ -199,6 +210,7 @@ public class CreateOutputXML {
 
 			writer.writeEndElement();
 
+			//This is for the page end
 			if(count==(noDocs-1))
 			{
 				writer.writeCharacters("\n\t");
