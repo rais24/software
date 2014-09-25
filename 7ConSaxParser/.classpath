@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="/Users/rishirais/Downloads/Tess4J/dist/tess4j.jar"/>
 	<classpathentry kind="lib" path="/Users/rishirais/Downloads/commons-lang3-3.3.2/commons-lang3-3.3.2-javadoc.jar"/>
 	<classpathentry kind="lib" path="/Users/rishirais/Downloads/commons-lang3-3.3.2/commons-lang3-3.3.2.jar"/>
+	<classpathentry kind="lib" path="/Users/rishirais/Downloads/leptonica-1.71"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

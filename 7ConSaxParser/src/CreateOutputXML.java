@@ -124,7 +124,7 @@ public class CreateOutputXML {
 			}
 			//Element No 7 -  Image Start
 
-		/*	if(Doc.image!=null)
+			/*	if(Doc.image!=null)
 			{
 				writer.writeStartElement("Image");
 				writer.writeAttribute("id", Doc.image.getId());
@@ -138,27 +138,27 @@ public class CreateOutputXML {
 				//Element No 7 - Image End
 				writer.writeCharacters("\n\t");
 			}
-			*/
+			 */
 			if(Doc.multipleimage!=null)
 			{
 				for(CommanData imageData:Doc.multipleimage)
 				{
-				writer.writeStartElement("Image");
-				writer.writeAttribute("id", imageData.getId());
-				writer.writeAttribute("Type", imageData.getType());
-				writer.writeAttribute("Rectpoint", imageData.getRectpoint());
-				writer.writeAttribute("Polypoint", imageData.getPolypoint());
-				writer.writeAttribute("rotate", imageData.getRotate());
-				writer.writeAttribute("inverse", imageData.getInverse());
-				writer.writeAttribute("pageid", imageData.getPageid());
-				writer.writeEndElement();
-				//Element No 7 - Image End
-				writer.writeCharacters("\n\t");
+					writer.writeStartElement("Image");
+					writer.writeAttribute("id", imageData.getId());
+					writer.writeAttribute("Type", imageData.getType());
+					writer.writeAttribute("Rectpoint", imageData.getRectpoint());
+					writer.writeAttribute("Polypoint", imageData.getPolypoint());
+					writer.writeAttribute("rotate", imageData.getRotate());
+					writer.writeAttribute("inverse", imageData.getInverse());
+					writer.writeAttribute("pageid", imageData.getPageid());
+					writer.writeEndElement();
+					//Element No 7 - Image End
+					writer.writeCharacters("\n\t");
 				}
 			}
-			
-			
-			
+
+
+
 			// Element No 8 - Photocredit Starts
 
 			/*if(Doc.photocredit!=null)
@@ -182,24 +182,24 @@ public class CreateOutputXML {
 			{
 				for(CommanData photocreditData:Doc.multiplephotocredit)
 				{
-				writer.writeStartElement("Photocredit");
-				writer.writeAttribute("id", photocreditData.getId());
-				writer.writeAttribute("Type", photocreditData.getType());
-				writer.writeAttribute("Rectpoint", photocreditData.getRectpoint());
-				writer.writeAttribute("Polypoint", photocreditData.getPolypoint());
-				writer.writeAttribute("rotate", photocreditData.getRotate());
-				writer.writeAttribute("inverse", photocreditData.getInverse());
-				writer.writeCharacters("<p>");
-				writer.writeCharacters(photocreditData.getExtractedText().trim());
-				writer.writeCharacters("</p>");
-				writer.writeEndElement();
-				writer.writeCharacters("\n\t");
+					writer.writeStartElement("Photocredit");
+					writer.writeAttribute("id", photocreditData.getId());
+					writer.writeAttribute("Type", photocreditData.getType());
+					writer.writeAttribute("Rectpoint", photocreditData.getRectpoint());
+					writer.writeAttribute("Polypoint", photocreditData.getPolypoint());
+					writer.writeAttribute("rotate", photocreditData.getRotate());
+					writer.writeAttribute("inverse", photocreditData.getInverse());
+					writer.writeCharacters("<p>");
+					writer.writeCharacters(photocreditData.getExtractedText().trim());
+					writer.writeCharacters("</p>");
+					writer.writeEndElement();
+					writer.writeCharacters("\n\t");
 				}
 			}
 
 			//Element No 9 - Caption Start
 
-		/*	if(Doc.caption!=null)
+			/*	if(Doc.caption!=null)
 			{
 				writer.writeStartElement("Caption");
 				writer.writeAttribute("id", Doc.caption.getId());
@@ -214,32 +214,32 @@ public class CreateOutputXML {
 				writer.writeEndElement();
 				writer.writeCharacters("\n\t");
 			}*/
-			
-			
+
+
 			if(Doc.multiplecaption!=null)
 			{
 				for(CommanData multiplecaptionData:Doc.multiplecaption)
 				{
-				writer.writeStartElement("Caption");
-				writer.writeAttribute("id", multiplecaptionData.getId());
-				writer.writeAttribute("Type", multiplecaptionData.getType());
-				writer.writeAttribute("Rectpoint", multiplecaptionData.getRectpoint());
-				writer.writeAttribute("Polypoint", multiplecaptionData.getPolypoint());
-				writer.writeAttribute("rotate", multiplecaptionData.getRotate());
-				writer.writeAttribute("inverse", multiplecaptionData.getInverse());
-				writer.writeCharacters("<p>");
-				writer.writeCharacters(multiplecaptionData.getExtractedText().trim());
-				writer.writeCharacters("</p>");
-				writer.writeEndElement();
-				writer.writeCharacters("\n\t");
+					writer.writeStartElement("Caption");
+					writer.writeAttribute("id", multiplecaptionData.getId());
+					writer.writeAttribute("Type", multiplecaptionData.getType());
+					writer.writeAttribute("Rectpoint", multiplecaptionData.getRectpoint());
+					writer.writeAttribute("Polypoint", multiplecaptionData.getPolypoint());
+					writer.writeAttribute("rotate", multiplecaptionData.getRotate());
+					writer.writeAttribute("inverse", multiplecaptionData.getInverse());
+					writer.writeCharacters("<p>");
+					writer.writeCharacters(multiplecaptionData.getExtractedText().trim());
+					writer.writeCharacters("</p>");
+					writer.writeEndElement();
+					writer.writeCharacters("\n\t");
 				}
 			}
-			
-			
+
+
 			//Element No 9 - Caption End
 
 
-		/*	if(Doc.text!=null)
+			/*	if(Doc.text!=null)
 			{
 				//Element No 10 - Text Start
 				writer.writeStartElement("Text");
@@ -285,11 +285,16 @@ public class CreateOutputXML {
 
 					for(int i=0; i<splitParagraphs.length;i++)
 					{
-						writer.writeCharacters("\n\t");
-						writer.writeCharacters("<p>");
-						//writer.writeCharacters(Doc.text.getExtractedText().trim());
-						writer.writeCharacters(splitParagraphs[i].trim());
-						writer.writeCharacters("</p>");
+						String[] splitParaline=splitParagraphs[i].split("\n");
+
+						for (int y=0;y<splitParaline.length;y++)
+						{
+							writer.writeCharacters("\n\t");
+							writer.writeCharacters("<p>");
+							//writer.writeCharacters(Doc.text.getExtractedText().trim());
+							writer.writeCharacters(splitParaline[y].trim());
+							writer.writeCharacters("</p>");
+						}
 					}
 					//writer.writeCharacters(replacedText);
 
