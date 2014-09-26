@@ -1,5 +1,7 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +18,8 @@ public class StaxXMLStreamReader {
 	
 	//Above code is added for Documents
 
-	//public static void runEngine(String xmlfilepath, String imagefilepath, String outputfolderpath)
-	public static void main(String[] args)
+	public static boolean runEngine(String xmlfilepath, String imagefilepath, String outputfolderpath)
+//	public static void main(String[] args)
 	{
 		//This is the path of the xml file, going forward to be added as input argument
 		
@@ -30,17 +32,27 @@ public class StaxXMLStreamReader {
 		//String inputXML="/Users/rishirais/Downloads/Test/XML/RNK_20140915_00_B_008_V00.xml";
 	//	String inputImageFile="/Users/rishirais/Downloads/Test/JPG/RNK_20140915_00_B_008_V00.jpg";
 		
-		String inputXML=args[0];
-		String inputImageFile=args[1];
+		String inputXML=xmlfilepath;
+		String inputImageFile=imagefilepath;
+		
+		//String inputXML=args[0];
+		//String inputImageFile=args[1];
 		
 		
-		String getFilepathParseArray[]= inputXML.split("/");
-		String getFileName=getFilepathParseArray[getFilepathParseArray.length-1];
+		Path path= Paths.get(inputXML);
 		
+	//	System.out.println("Input file Path is :" +inputXML);
+	//	String getFilepathParseArray[]= inputXML.split("/\/");
+		
+	//	String getFileName=getFilepathParseArray[getFilepathParseArray.length-1];
+		
+	//	System.out.println("Input file Name is :" +path.getFileName().toString());
 		
 		//String outputfilePath=outputfolderpath+"/"+ getFileName;
 		//String outputfilePath="/Users/rishirais/Downloads/Test/Output/"+getFileName;
-		String outputfilePath=args[2]+getFileName;
+		//String outputfilePath=args[2]+getFileName;
+		String outputfilePath=outputfolderpath+"\\"+path.getFileName().toString();
+		
 
 		//Document type declared
 		List<Document> docList=parseDocumentXML(inputXML);
@@ -48,49 +60,42 @@ public class StaxXMLStreamReader {
 		System.out.println("Status Message : Engine Running, total number of Documents is :" + docList.size());
 		for(Document doc : docList){
 			
-			System.out.println("System Message : Processing coordinates using Tesseract");
+			System.out.println("System Message : Processing coordinates using Tesseract and Cube");
 			//This is used to fill the object with the text extracted from Tesseract
 			if(doc.headline!=null)
 			{
-			   
 				doc.headline=TesseractExtractor.getImageText(doc.headline.getRectpoint(), inputImageFile, doc.headline);
 			}
 			if(doc.subheadline!=null)
 			{
-				
 			doc.subheadline=TesseractExtractor.getImageText(doc.subheadline.getRectpoint(), inputImageFile, doc.subheadline);
 			}
 			
 			if(doc.byline!=null)
 			{
-				
 			doc.byline=TesseractExtractor.getImageText(doc.byline.getRectpoint(), inputImageFile, doc.byline);
 			}
 			//Some advertisements do not have photographs
 			if(doc.photocredit!=null)
 			{
-				
 			doc.photocredit=TesseractExtractor.getImageText(doc.photocredit.getRectpoint(), inputImageFile, doc.photocredit);
 			doc.multiplephotocredit=TesseractExtractor.getImageText(inputImageFile,doc.multiplephotocredit);
-			
 			}
 			
 			if(doc.caption!=null)
 			{
-				
-		//	doc.caption=TesseractExtractor.getImageText(doc.caption.getRectpoint(), inputImageFile, doc.caption);
 			doc.multiplecaption=TesseractExtractor.getImageText(inputImageFile,doc.multiplecaption);
 			}
 			if(doc.text!=null)
 			{
-			
-		//	doc.text=TesseractExtractor.getImageText(doc.text.getRectpoint(), inputImageFile, doc.text);
 			doc.multipletext=TesseractExtractor.getImageText(inputImageFile,doc.multipletext);
 			}
-			
+
 			CreateOutputXML output= new CreateOutputXML();
 			output.CreateXML(doc,outputfilePath,docList.size());
 		}
+	
+	return true;
 	}
 
 	private static List<Document> parseDocumentXML(String fileName) {
@@ -106,7 +111,8 @@ public class StaxXMLStreamReader {
 			
 			int event = xmlStreamReader.getEventType();
 			//List<CommanData> textList=new List<CommanData>();
-			System.out.println("Status Message : Going through Document");
+			
+			System.out.println("Status Message : Loading Document");
 			while(true){
 				
 				switch(event) {

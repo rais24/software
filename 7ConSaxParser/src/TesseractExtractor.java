@@ -2,6 +2,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import net.sourceforge.tess4j.*;
 
 import java.awt.*;
@@ -17,7 +18,13 @@ public class TesseractExtractor
 			// Create tesseract instane
 			File imageFile = new File(filePath);
 			Tesseract instance = Tesseract.getInstance();  // JNA Interface Mapping
-
+			
+			instance.setHocr(false);
+			instance.setLanguage("eng");
+			instance.setOcrEngineMode(2);			
+			//instance.setTessVariable("tessedit_ocr_engine_mode", "2");
+			//instance.setLanguage("eng");
+			
 			int x1= Integer.parseInt(coordinateArray[0]);
 			int y1= Integer.parseInt(coordinateArray[1]);
 			int x2= Integer.parseInt(coordinateArray[2]);
@@ -28,6 +35,7 @@ public class TesseractExtractor
 			//Pass coordinates to instance
 			Rectangle rect= new Rectangle(x1,y1,width,height);
 			result = instance.doOCR(imageFile,rect);
+	
 			dataObj.setExtractedText(result);
 		} catch (TesseractException e) {
 			// TODO Auto-generated catch block
@@ -49,10 +57,18 @@ public class TesseractExtractor
 			{	
 				String coordinates=data.getRectpoint();
 				String[] coordinateArray = coordinates.split(",");
-				// Create tesseract instane
+				// Create tesseract instance
 				File imageFile = new File(filePath);
 				Tesseract instance = Tesseract.getInstance();  // JNA Interface Mapping
-
+				instance.setHocr(false);
+			//	instance.setTessVariable("tessedit_ocr_engine_mode", "");
+				
+				
+				instance.setLanguage("eng");
+				instance.setOcrEngineMode(2);	
+			
+				//instance.setLanguage("eng");
+				
 				int x1= Integer.parseInt(coordinateArray[0]);
 				int y1= Integer.parseInt(coordinateArray[1]);
 				int x2= Integer.parseInt(coordinateArray[2]);
@@ -73,8 +89,4 @@ public class TesseractExtractor
 		}
 		return multipletext;
 	}
-
-
-
-
 }

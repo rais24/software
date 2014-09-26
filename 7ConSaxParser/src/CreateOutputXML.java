@@ -12,7 +12,7 @@ public class CreateOutputXML {
 	public void CreateXML(Document Doc,String fileName,int noDocs)
 	{
 
-		System.out.println("System Message :  The output xml is being created at : " + fileName);
+	//	System.out.println("System Message :  The output xml is being created at : " + fileName);
 
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 
@@ -21,11 +21,8 @@ public class CreateOutputXML {
 			factory.setProperty("escapeCharacters", false);
 
 			XMLStreamWriter	writer = factory.createXMLStreamWriter(new FileWriter(fileName,true));
-
 			//This part should only be written once hence only for first document
-
 			if(count==0)
-
 			{
 				writer.writeCharacters("<?xml version= \"1.0\" encoding=\"UTF-8\"?>");
 				//Element No 1 - Page Start
@@ -76,9 +73,11 @@ public class CreateOutputXML {
 				writer.writeAttribute("Polypoint", Doc.headline.getPolypoint());
 				writer.writeAttribute("rotate", Doc.headline.getRotate());
 				writer.writeAttribute("inverse", Doc.headline.getInverse());
+				writer.writeCharacters("\n\t");
 				writer.writeCharacters("<p>");
-				writer.writeCharacters(Doc.headline.getExtractedText().trim());
+				writer.writeCharacters(Doc.headline.getExtractedText().trim().replace("\n", " ").replace("- ", ""));
 				writer.writeCharacters("</p>");
+				writer.writeCharacters("\n\t");
 				writer.writeEndElement();
 
 				//Element No 4 - Headline End
@@ -95,10 +94,12 @@ public class CreateOutputXML {
 				writer.writeAttribute("Polypoint", Doc.subheadline.getPolypoint());
 				writer.writeAttribute("rotate", Doc.subheadline.getRotate());
 				writer.writeAttribute("inverse", Doc.subheadline.getInverse());
+				writer.writeCharacters("\n\t");
 				writer.writeCharacters("<p>");
 
-				writer.writeCharacters(Doc.subheadline.getExtractedText().trim());
+				writer.writeCharacters(Doc.subheadline.getExtractedText().trim().replace("\n", " ").replace("- ", ""));
 				writer.writeCharacters("</p>");
+				writer.writeCharacters("\n\t");
 				writer.writeEndElement();
 				//Element No 5 - Subheadline end
 				writer.writeCharacters("\n\t");
@@ -114,31 +115,16 @@ public class CreateOutputXML {
 				writer.writeAttribute("Polypoint", Doc.byline.getPolypoint());
 				writer.writeAttribute("rotate", Doc.byline.getRotate());
 				writer.writeAttribute("inverse", Doc.byline.getInverse());
+				writer.writeCharacters("\n\t");
 				writer.writeCharacters("<p>");
-				writer.writeCharacters(Doc.byline.getExtractedText().trim());
+				writer.writeCharacters(Doc.byline.getExtractedText().trim().replace("\n", " ").replace("- ", ""));
 				writer.writeCharacters("</p>");
+				writer.writeCharacters("\n\t");
 				writer.writeEndElement();
-
-				//Element No 6 - Byline End
 				writer.writeCharacters("\n\t");
 			}
 			//Element No 7 -  Image Start
 
-			/*	if(Doc.image!=null)
-			{
-				writer.writeStartElement("Image");
-				writer.writeAttribute("id", Doc.image.getId());
-				writer.writeAttribute("Type", Doc.image.getType());
-				writer.writeAttribute("Rectpoint", Doc.image.getRectpoint());
-				writer.writeAttribute("Polypoint", Doc.image.getPolypoint());
-				writer.writeAttribute("rotate", Doc.image.getRotate());
-				writer.writeAttribute("inverse", Doc.image.getInverse());
-				writer.writeAttribute("pageid", Doc.image.getPageid());
-				writer.writeEndElement();
-				//Element No 7 - Image End
-				writer.writeCharacters("\n\t");
-			}
-			 */
 			if(Doc.multipleimage!=null)
 			{
 				for(CommanData imageData:Doc.multipleimage)
@@ -152,31 +138,13 @@ public class CreateOutputXML {
 					writer.writeAttribute("inverse", imageData.getInverse());
 					writer.writeAttribute("pageid", imageData.getPageid());
 					writer.writeEndElement();
-					//Element No 7 - Image End
+				
 					writer.writeCharacters("\n\t");
 				}
 			}
 
-
-
 			// Element No 8 - Photocredit Starts
 
-			/*if(Doc.photocredit!=null)
-			{
-				writer.writeStartElement("Photocredit");
-				writer.writeAttribute("id", Doc.photocredit.getId());
-				writer.writeAttribute("Type", Doc.photocredit.getType());
-				writer.writeAttribute("Rectpoint", Doc.photocredit.getRectpoint());
-				writer.writeAttribute("Polypoint", Doc.photocredit.getPolypoint());
-				writer.writeAttribute("rotate", Doc.photocredit.getRotate());
-				writer.writeAttribute("inverse", Doc.photocredit.getInverse());
-				writer.writeCharacters("<p>");
-				writer.writeCharacters(Doc.photocredit.getExtractedText().trim());
-				writer.writeCharacters("</p>");
-				writer.writeEndElement();
-				writer.writeCharacters("\n\t");
-			}*/
-			// Element No 8 -  Photocredit End
 
 			if(Doc.multiplephotocredit!=null)
 			{
@@ -189,31 +157,16 @@ public class CreateOutputXML {
 					writer.writeAttribute("Polypoint", photocreditData.getPolypoint());
 					writer.writeAttribute("rotate", photocreditData.getRotate());
 					writer.writeAttribute("inverse", photocreditData.getInverse());
+					writer.writeCharacters("\n\t");
 					writer.writeCharacters("<p>");
-					writer.writeCharacters(photocreditData.getExtractedText().trim());
+					writer.writeCharacters(photocreditData.getExtractedText().trim().replace("\n", " ").replace("- ", ""));
 					writer.writeCharacters("</p>");
+					writer.writeCharacters("\n\t");
 					writer.writeEndElement();
 					writer.writeCharacters("\n\t");
 				}
 			}
-
-			//Element No 9 - Caption Start
-
-			/*	if(Doc.caption!=null)
-			{
-				writer.writeStartElement("Caption");
-				writer.writeAttribute("id", Doc.caption.getId());
-				writer.writeAttribute("Type", Doc.caption.getType());
-				writer.writeAttribute("Rectpoint", Doc.caption.getRectpoint());
-				writer.writeAttribute("Polypoint", Doc.caption.getPolypoint());
-				writer.writeAttribute("rotate", Doc.caption.getRotate());
-				writer.writeAttribute("inverse", Doc.caption.getInverse());
-				writer.writeCharacters("<p>");
-				writer.writeCharacters(Doc.caption.getExtractedText().trim());
-				writer.writeCharacters("</p>");
-				writer.writeEndElement();
-				writer.writeCharacters("\n\t");
-			}*/
+			// Element No 8 -  Photocredit End
 
 
 			if(Doc.multiplecaption!=null)
@@ -227,45 +180,15 @@ public class CreateOutputXML {
 					writer.writeAttribute("Polypoint", multiplecaptionData.getPolypoint());
 					writer.writeAttribute("rotate", multiplecaptionData.getRotate());
 					writer.writeAttribute("inverse", multiplecaptionData.getInverse());
+					writer.writeCharacters("\n\t");
 					writer.writeCharacters("<p>");
-					writer.writeCharacters(multiplecaptionData.getExtractedText().trim());
+					writer.writeCharacters(multiplecaptionData.getExtractedText().trim().replace("\n", " ").replace("- ", ""));
 					writer.writeCharacters("</p>");
+					writer.writeCharacters("\n\t");
 					writer.writeEndElement();
 					writer.writeCharacters("\n\t");
 				}
 			}
-
-
-			//Element No 9 - Caption End
-
-
-			/*	if(Doc.text!=null)
-			{
-				//Element No 10 - Text Start
-				writer.writeStartElement("Text");
-				writer.writeAttribute("id", Doc.text.getId());
-				writer.writeAttribute("Type", Doc.text.getType());
-				writer.writeAttribute("Rectpoint", Doc.text.getRectpoint());
-				writer.writeAttribute("Polypoint", Doc.text.getPolypoint());
-				writer.writeAttribute("rotate", Doc.text.getRotate());
-				writer.writeAttribute("inverse", Doc.text.getInverse());
-
-				String[] splitParagraphs=Doc.text.getExtractedText().split("\n\n");
-
-				for(int i=0; i<splitParagraphs.length;i++)
-				{
-					System.out.println("Going inside the split");
-					writer.writeCharacters("\n\t");
-					writer.writeCharacters("<p>");
-					//writer.writeCharacters(Doc.text.getExtractedText().trim());
-					writer.writeCharacters(splitParagraphs[i].trim());
-					writer.writeCharacters("</p>");
-				}
-				//writer.writeCharacters(replacedText);
-
-				writer.writeEndElement();
-			}*/
-
 
 			if(Doc.multipletext!=null)
 			{
@@ -285,18 +208,12 @@ public class CreateOutputXML {
 
 					for(int i=0; i<splitParagraphs.length;i++)
 					{
-						String[] splitParaline=splitParagraphs[i].split("\n");
-
-						for (int y=0;y<splitParaline.length;y++)
-						{
-							writer.writeCharacters("\n\t");
+						    writer.writeCharacters("\n\t");
 							writer.writeCharacters("<p>");
-							//writer.writeCharacters(Doc.text.getExtractedText().trim());
-							writer.writeCharacters(splitParaline[y].trim());
+							splitParagraphs[i]=splitParagraphs[i].replace("\n", " ").replace("- ", "");
+							writer.writeCharacters(splitParagraphs[i].trim());
 							writer.writeCharacters("</p>");
-						}
 					}
-					//writer.writeCharacters(replacedText);
 
 					writer.writeEndElement();
 					writer.writeCharacters("\n\t");
@@ -324,7 +241,7 @@ public class CreateOutputXML {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		
-		System.out.println("System Message :  All Outputs are generated");
+		//System.out.println("System Message :  All Outputs are generated");
 	}
 }
 
