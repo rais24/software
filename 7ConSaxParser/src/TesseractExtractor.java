@@ -31,7 +31,8 @@ public class TesseractExtractor
 			//	Tesseract1 instance= new Tesseract1();
 			instance.setHocr(false);
 			instance.setLanguage("eng");
-			instance.setOcrEngineMode(2);			
+			instance.setOcrEngineMode(2);	
+			
 			//instance.setTessVariable("tessedit_ocr_engine_mode", "2");
 			//instance.setLanguage("eng");
 
@@ -44,23 +45,25 @@ public class TesseractExtractor
 			int height=y2-y1;
 			//Pass coordinates to instance
 			Rectangle rect= new Rectangle(x1,y1,width,height);
-			textArea.append("\n");
-			textArea.append("Width is :" +width);
-			textArea.append("\n");
-			textArea.append("Instance is :" +instance.toString());
-			textArea.append("\n");
-			textArea.append("Begin OCR with file :"+imageFile);
+	//		textArea.append("\n");
+	//		textArea.append("Width is :" +width);
+	//		textArea.append("\n");
+	//		textArea.append("Instance is :" +instance.toString());
+	//		textArea.append("\n");
+	//		textArea.append("Begin OCR with file :"+imageFile);
 
 			IIORegistry registry =IIORegistry.getDefaultInstance();
+			
+		//	IIORegistry registry2= new IIORegistry();
 			registry.registerServiceProvider(new
 			com.sun.media.imageioimpl.plugins.tiff.TIFFImageWriterSpi());
 			registry.registerServiceProvider(new 
 			com.sun.media.imageioimpl.plugins.tiff.TIFFImageReaderSpi());
 
 			result = instance.doOCR(imageFile,rect);
-			textArea.append("\n");
+	//		textArea.append("\n");
 
-			textArea.append("End OCR");
+	//		textArea.append("End OCR");
 			dataObj.setExtractedText(result);
 		} catch (TesseractException e) {
 			// TODO Auto-generated catch block
@@ -118,9 +121,9 @@ public class TesseractExtractor
 				com.sun.media.imageioimpl.plugins.tiff.TIFFImageReaderSpi());
 				
 				result = instance.doOCR(imageFile,rect);
-				textArea.append("\n");
+			//	textArea.append("\n");
 
-				textArea.append("End OCR");
+			//textArea.append("End OCR");
 
 				data.setExtractedText(result);
 			}

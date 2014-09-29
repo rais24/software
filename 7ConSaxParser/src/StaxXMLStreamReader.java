@@ -62,7 +62,7 @@ public class StaxXMLStreamReader {
 			System.out.println("Status Message : Engine Running, total number of Documents is :" + docList.size());
 			textArea.append("\n");
 			textArea.append("Status Message : Engine Running, total number of Documents is :" + docList.size());
-
+			textArea.append("\n");
 			for(Document doc : docList){
 
 				System.out.println("System Message : Processing coordinates using Tesseract and Cube");
@@ -71,14 +71,16 @@ public class StaxXMLStreamReader {
 
 				//This is used to fill the object with the text extracted from Tesseract
 				if(doc.headline!=null)
-				{	textArea.append("Headline");
-				    textArea.append("\n");
+				{	
+		//			textArea.append("Headline");
+		//		    textArea.append("\n");
 					doc.headline=TesseractExtractor.getImageText(doc.headline.getRectpoint(), inputImageFile, doc.headline,textArea);
-					textArea.append("Headline Text is: "+doc.headline.getExtractedText());
+				//	textArea.append("Headline Text is: "+doc.headline.getExtractedText());
 				}
 				if(doc.subheadline!=null)
-					textArea.append("\n");
-				{	textArea.append("SubHeadline");
+				//	textArea.append("\n");
+				{	
+					//textArea.append("SubHeadline");
 					doc.subheadline=TesseractExtractor.getImageText(doc.subheadline.getRectpoint(), inputImageFile, doc.subheadline,textArea);
 				}
 

@@ -12,6 +12,6 @@
 	<classpathentry exported="true" kind="lib" path="leptonica-1.71"/>
 	<classpathentry exported="true" kind="lib" path="nbproject"/>
 	<classpathentry exported="true" kind="lib" path="Tess4J"/>
-	<classpathentry kind="lib" path="C:/Users/admin/workspace/software/7ConSaxParser/jai_imageio-1.1.jar/jai_imageio-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/admin/workspace/software/7ConSaxParser/jai_imageio.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

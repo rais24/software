@@ -57,39 +57,41 @@ public class TessForm {
 		frmconTextextractorV.setBounds(100, 100, 536, 461);
 		frmconTextextractorV.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmconTextextractorV.getContentPane().setLayout(null);
-		
+
 		Panel panel = new Panel();
 		panel.setBackground(UIManager.getColor("Button.background"));
 		panel.setBounds(10, 10, 481, 49);
 		//List<Images> image= new List<Images>();
-	
+
 		frmconTextextractorV.getContentPane().add(panel);
 		panel.setLayout(null);
- 
+
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(219, 5, 0, 0);
-		lblNewLabel.setIcon(new ImageIcon("/Users/rishirais/Downloads/dd-logo-50X50.png"));
+		//java.net.URL imgURL = getClass().getResource("dd-logo-50X50.png");
+		lblNewLabel.setIcon(createImageIcon("dd-logo-50X50.png","DD Logo"));
+
 		panel.add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setBounds(224, 5, 0, 0);
-		lblNewLabel_1.setIcon(new ImageIcon("/Users/rishirais/Downloads/7con-logo-50X50.png"));
+		lblNewLabel_1.setIcon(createImageIcon("dd-logo-50X50.png","DD Logo"));
 		panel.add(lblNewLabel_1);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\admin\\workspace\\software\\7ConSaxParser\\dd-logo-50X50.png"));
+		lblNewLabel_2.setIcon(createImageIcon("dd-logo-50X50.png","DD Logo"));
 		lblNewLabel_2.setBackground(UIManager.getColor("Button.background"));
 		lblNewLabel_2.setBounds(10, 5, 52, 44);
 		panel.add(lblNewLabel_2);
-		
+
 		JLabel label_3 = new JLabel("New label");
-		label_3.setIcon(new ImageIcon("C:\\Users\\admin\\workspace\\software\\7ConSaxParser\\7con-logo-50X50.png"));
+		label_3.setIcon(createImageIcon("7con-logo-50X50.png","7-Con Logo"));
 		label_3.setBackground(SystemColor.menu);
 		label_3.setBounds(419, 5, 52, 44);
 		panel.add(label_3);
-		
+
 		JLabel label_5 = new JLabel("New label");
-		label_5.setIcon(new ImageIcon("C:\\Users\\admin\\workspace\\software\\7ConSaxParser\\TextExtractor.jpg"));
+		label_5.setIcon(createImageIcon("TextExtractor.jpg","Text Extractor"));
 		label_5.setBackground(SystemColor.menu);
 		label_5.setBounds(173, 5, 113, 44);
 		panel.add(label_5);
@@ -188,12 +190,12 @@ public class TessForm {
 		Button button_3 = new Button("Submit");
 		button_3.setBounds(192, 170, 102, 28);
 		frmconTextextractorV.getContentPane().add(button_3);
-		
-    	final JTextArea textArea = new JTextArea();
+
+		final JTextArea textArea = new JTextArea();
 		textArea.setBounds(10, 209, 500, 203);
-		
+
 		frmconTextextractorV.getContentPane().add(textArea);
-		
+
 		JLabel label_4 = new JLabel("New label");
 		label_4.setBackground(SystemColor.menu);
 		label_4.setBounds(367, 227, 82, 14);
@@ -201,26 +203,44 @@ public class TessForm {
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-					
+
 				if(textField.getText().length()>0 && textField_1.getText().length()>0 && textField_2.getText().length()>0)
 				{
 					textArea.append("Running the Extractor");
-				StaxXMLStreamReader load= new StaxXMLStreamReader();
-				Boolean run=false;
-				run=load.runEngine(textField.getText(), textField_1.getText(), textField_2.getText(),textArea);
-				if(run)
-				{
-					System.out.println("System Message : Parsing and Extracion of the Document Completed");
-					textArea.append("/n");
-					textArea.append("System Message : Parsing and Extracion of the Document Completed");
-				}
+					StaxXMLStreamReader load= new StaxXMLStreamReader();
+					Boolean run=false;
+					run=load.runEngine(textField.getText(), textField_1.getText(), textField_2.getText(),textArea);
+					if(run)
+					{
+						System.out.println("System Message : Parsing and Extracion of the Document Completed");
+						textArea.append("\n");
+						textArea.append("System Message : Parsing and Extracion of the Document Completed");
+					}
 				}
 				else
 				{
 					textArea.append("Please check inputs");
 				}
-		      }
+			}
+
+
+
 		});
-	
+
 	}
+
+	private ImageIcon createImageIcon(String path, String description) {
+
+		java.net.URL imgURL = getClass().getResource(path);
+		if (imgURL != null) {
+			return new ImageIcon(imgURL, description);
+		} else {
+			System.err.println("Couldn't find file: " + path);
+			return null;
+		}
+	}
+	// TODO Auto-generated method stub
+
 }
+
+
